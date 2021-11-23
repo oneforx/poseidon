@@ -1,9 +1,14 @@
 {
   "name": "@oneforx/poseidon",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": {
     "email": "support@oneforx.com",
     "name": "oneforx",
     "url": "https://oneforx.com"
-  }
+  },
+  "keywords": [
+    "react-library", "front-end-library", "front",
+    "library", "hooks", "hooks-library",
+    "contexts", "contexts-library"
+  ]
 }
