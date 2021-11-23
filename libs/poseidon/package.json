@@ -1,10 +1,14 @@
 {
   "name": "@oneforx/poseidon",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
-    "email": "support@oneforx.com",
+    "email": "contact@oneforx.net",
     "name": "oneforx",
-    "url": "https://oneforx.com"
+    "url": "https://oneforx.net"
+  },
+  "homepage": "https://oneforx.net/poseidon",
+  "engines": {
+    "node": ">= v12.18.4"
   },
   "keywords": [
     "react-library", "front-end-library", "front",
