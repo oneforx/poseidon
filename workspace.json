@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "poseidon-front": "apps/poseidon-front",
+    "poseidon-front-e2e": "apps/poseidon-front-e2e"
+  }
+}

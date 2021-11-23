@@ -1,0 +1,72 @@
+{
+  "root": "apps/poseidon-front",
+  "sourceRoot": "apps/poseidon-front/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/poseidon-front",
+        "index": "apps/poseidon-front/src/index.html",
+        "baseHref": "/",
+        "main": "apps/poseidon-front/src/main.tsx",
+        "polyfills": "apps/poseidon-front/src/polyfills.ts",
+        "tsConfig": "apps/poseidon-front/tsconfig.app.json",
+        "assets": [
+          "apps/poseidon-front/src/favicon.ico",
+          "apps/poseidon-front/src/assets"
+        ],
+        "styles": ["apps/poseidon-front/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/poseidon-front/src/environments/environment.ts",
+              "with": "apps/poseidon-front/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "poseidon-front:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "poseidon-front:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/poseidon-front/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/poseidon-front"],
+      "options": {
+        "jestConfig": "apps/poseidon-front/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
