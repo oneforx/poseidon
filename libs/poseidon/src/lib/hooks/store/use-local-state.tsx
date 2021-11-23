@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useCallback, useEffect, useState } from "react";
 
 /**
  *
  * @param {*} itemName
  * @returns { null | object }
  */
-const getLocalItem = (itemName: string) => {
-    if (!localStorage) return null;
+function getLocalItem <T> (itemName: string): T | undefined {
+    if (!localStorage) return undefined;
     const itemValue: string | null | Record<string, unknown> | [] | number = localStorage.getItem(itemName);
     if (itemValue) {
         return JSON.parse(itemValue || '{}').value;
-    } else return null;
+    } else return undefined;
 }
 
 
 type StateValue = Record<string, unknown> | [] | string | number | boolean
 
 // On stock sous le format json le type et la valeur de l'item
-const setLocalItem = (itemName: string, itemValue?: StateValue ) => {
-    if (!localStorage) return null;
+function setLocalItem <T> (itemName: string, itemValue?: T ): T | undefined {
+    if (!localStorage) return undefined;
     if (typeof(itemValue) === "object") {
         if (Array.isArray(itemValue)) {
             localStorage.setItem(itemName, JSON.stringify({ type: "array", value: itemValue }))
@@ -31,8 +31,9 @@ const setLocalItem = (itemName: string, itemValue?: StateValue ) => {
 }
 
 const removeLocalItem = (itemName: string) => {
-    if (!localStorage) return null;
-    return localStorage.removeItem(itemName);
+    if (!localStorage) return undefined;
+    localStorage.removeItem(itemName)
+    return ;
 }
 
 /**
@@ -43,11 +44,15 @@ const removeLocalItem = (itemName: string) => {
  */
 
 
-export const useLocalState = ( stateName: string, stateValue?: StateValue ) => {
-    const [ localState, setLocalState ] = useState( getLocalItem(stateName) || setLocalItem(stateName, stateValue));
+export function useLocalState <T> (stateName: string, stateValue?: T ): [
+  T | undefined,
+  ((newValue: T) => void ),
+  () => void
+] {
+    const [ localState, setLocalState ] = useState<T | undefined>( getLocalItem(stateName) || setLocalItem(stateName, stateValue));
 
     useEffect(() => {
-        const localItem = getLocalItem( stateName )
+        const localItem = getLocalItem<T>( stateName )
         localItem === null ? setLocalState( setLocalItem(stateName, stateValue) ) : setLocalState( localItem )
     }, [ stateName, stateValue ])
 
@@ -58,10 +63,20 @@ export const useLocalState = ( stateName: string, stateValue?: StateValue ) => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+      // window.addEventListener("storage", (e) => {
+      // });
+    }, []);
+
+    const handleDeleteLocalItem = useCallback(( stateName: string ) => {
+      localStorage.removeItem(stateName);
+      setLocalState(undefined)
+    }, []);
+
     return [
         /* GET */   localState,
-        /* PUT */   ( newValue: StateValue ) => setLocalState( setLocalItem(stateName, newValue) ),
-        /* DEL */   () => setLocalState( removeLocalItem(stateName) )
+        /* PUT */   ( newValue: T ) => setLocalState( setLocalItem(stateName, newValue) ),
+        /* DEL */   () => setLocalState( removeLocalItem(stateName)  )
     ]
 }
 
