@@ -4,17 +4,23 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve",
-    "build": "NX_BASE_HREF=/poseidon/ nx build --prod --baseHref=/poseidon/",
+    "build": "nx build",
+    "build-front": "NX_BASE_HREF=/poseidon/ nx build --prod --baseHref=/poseidon/",
     "test": "nx test",
     "publish": "nx build poseidon && cd dist/libs/poseidon && npm publish --scope=@oneforx/poseidon --access=public",
-    "deploy": "gh-pages -d dist/apps/poseidon-front "
+    "deploy": "gh-pages -d dist/apps/poseidon-front",
+    "pubdep": "pnpm run build-front && pnpm run deploy"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
+    "autoprefixer": "^10.4.0",
     "core-js": "^3.6.5",
+    "gh-pages": "^3.2.3",
+    "postcss": "^8.4.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "regenerator-runtime": "0.13.7",
+    "tailwindcss": "^2.2.19",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
