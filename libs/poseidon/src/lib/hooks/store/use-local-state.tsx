@@ -1,7 +1,6 @@
 import { SetStateAction, useCallback, useEffect, useState } from "react";
 
 /**
- *
  * @param {*} itemName
  * @returns { null | object }
  */
@@ -11,9 +10,6 @@ function getLocalItem <T> (itemName: string): T | undefined {
         return JSON.parse(itemValue || '{}').value as T;
     } else return undefined;
 }
-
-
-type StateValue = Record<string, unknown> | [] | string | number | boolean
 
 // On stock sous le format json le type et la valeur de l'item
 function setLocalItem <T> (itemName: string, itemValue?: T ): T | undefined {

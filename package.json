@@ -4,9 +4,10 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve",
-    "build": "nx build",
+    "build": "NX_BASE_HREF=/poseidon/ nx build --prod --baseHref=/poseidon/",
     "test": "nx test",
-    "publish": "nx build poseidon && cd dist/libs/poseidon && npm publish --scope=@oneforx/poseidon --access=public"
+    "publish": "nx build poseidon && cd dist/libs/poseidon && npm publish --scope=@oneforx/poseidon --access=public",
+    "deploy": "gh-pages -d dist/apps/poseidon-front "
   },
   "private": true,
   "dependencies": {
