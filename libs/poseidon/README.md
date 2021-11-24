@@ -1,4 +1,6 @@
-# poseidon
+Project under the upcoming license [OFX](https://github.com/oneforx/ofx) 
+
+# Poseidon
 
 This library was generated with [Nx](https://nx.dev).
 
