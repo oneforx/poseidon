@@ -1,7 +1,7 @@
 {
   "name": "@oneforx/poseidon",
-  "version": "0.1.3",
-  "license": "OFX",
+  "version": "0.1.4",
+  "license": "MIT",
   "author": {
     "email": "contact@oneforx.net",
     "name": "oneforx",
@@ -11,7 +11,7 @@
     "directory": "/tree/master/libs/poseidon",
     "url": "https://github.com/oneforx/poseidon"
   },
-  "homepage": "https://oneforx.github.io/poseidon",
+  "homepage": "https://oneforx.net/poseidon",
   "engines": {
     "node": ">= v12.18.4"
   },
