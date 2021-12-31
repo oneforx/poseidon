@@ -33,9 +33,11 @@ export function useRequest ( requestInfo: RequestInfo, requestInit: RequestInit,
     .then(res => {
       setIsLoading(false)
       setData(res)
+      setError(null)
     })
     .catch( err => {
       setIsLoading(false);
+      setData(null)
       setError(err)
     })
 }, [requestInfo, requestInit]);
