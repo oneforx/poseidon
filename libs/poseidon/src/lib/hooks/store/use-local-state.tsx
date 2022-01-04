@@ -46,7 +46,7 @@ export function useLocalState <T> (stateName: string, stateValue?: T ): [
     useEffect(() => {
         const localItem = getLocalItem<T>( stateName )
         localItem === undefined && stateValue !== undefined ? setLocalState( setLocalItem(stateName, stateValue) ) : setLocalState( localItem )
-        localItem !== undefined && stateValue !== undefined && stateValue !== localItem ? setLocalState( setLocalItem(stateName, stateValue) ) : setLocalState( localItem )
+        // localItem !== undefined && stateValue !== undefined && stateValue !== localItem ? setLocalState( setLocalItem(stateName, stateValue) ) : setLocalState( localItem )
     }, [ stateName, stateValue ])
 
     const handleDeleteLocalItem = useCallback(( stateName: string ) => {
