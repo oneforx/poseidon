@@ -1,15 +1,19 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { useState } from "react"
+import { useDidMount } from "..";
 
 type useRequestReturn = [
   { data: any, isLoading: boolean, error: any },
-  ( rInit?: Record<string, unknown> ) => void
+  ( rInit?: RequestInit ) => void
 ];
 
-export function useRequest ( requestInfo: RequestInfo, requestInit: RequestInit, fetchOnMount?: boolean ): useRequestReturn {
-  const [ data, setData ] = useState<any>(null)
-  const [ isLoading, setIsLoading ] = useState(false);
-  const [ error, setError ] = useState(null)
+export function useRequest ( requestInfo: RequestInfo, requestInit?: RequestInit | null, fetchOnMount?: boolean ): useRequestReturn {
+  const [ response, setResponse ] = useState<any>({
+    data: null,
+    isLoading: false,
+    error: null
+  })
+  const didMount = useDidMount()
 
   /**
    * @description Tell us if the browser have the AbortController
@@ -23,43 +27,48 @@ export function useRequest ( requestInfo: RequestInfo, requestInit: RequestInit,
     }
   }, []);
 
-  const fetchIt = useCallback(( rInit = {} ) => {
-    setIsLoading(true);
-    fetch(requestInfo, Object.assign({}, requestInit, rInit))
+  const fetchIt = useCallback(( rInit?: RequestInit ) => {
+    fetch(requestInfo, Object.assign({}, requestInit, Object.assign({}, {method: "GET", mode: "cors" }, rInit)))
     .then(res => {
-      setIsLoading(false);
+      setResponse({
+        ...response,
+        isLoading: true
+      });
       return res.json()
     })
     .then(res => {
-      setIsLoading(false)
-      setData(res)
-      setError(null)
+      setResponse({
+        ...response,
+        isLoading: false,
+        data: res
+      });
     })
     .catch( err => {
-      setIsLoading(false);
-      setData(null)
-      setError(err)
+      setResponse({
+        ...response,
+        error: err
+      });
     })
-}, [requestInfo, requestInit]);
+  }, [requestInfo, requestInit, response]);
 
   // Abort request when component unmount
   useEffect(() => {
     const controller = getAbortController() ? new AbortController() : null;
     const signal = controller ? controller.signal : null
 
-    if ( fetchOnMount )
+    if ( !didMount && fetchOnMount )
       fetchIt({ signal });
 
     return () => {
-      if ( fetchOnMount )
+      if ( didMount && fetchOnMount )
         controller?.abort();
     }
-  }, []);
+  }, [didMount, getAbortController, fetchOnMount, fetchIt]);
 
 
 
-  return useMemo(() => [
-    { data, isLoading, error },
+  return [
+    response,
     fetchIt
-  ], [ data, isLoading, error, fetchIt ]);
+  ];
 }
