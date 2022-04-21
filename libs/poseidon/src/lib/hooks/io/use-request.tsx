@@ -2,13 +2,19 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useState } from "react"
 import { useDidMount } from "..";
 
-type useRequestReturn = [
-  { data: any, isLoading: boolean, error: any },
+type useRequestReturn <T> = [
+  { data: T | null, isLoading: boolean, error: any },
   ( rInit?: RequestInit ) => void
 ];
 
-export function useRequest ( requestInfo: RequestInfo, requestInit?: RequestInit | null, fetchOnMount?: boolean ): useRequestReturn {
-  const [ response, setResponse ] = useState<any>({
+type TResponse <T> = {
+  data: T | null,
+  isLoading: boolean,
+  error: any
+}
+
+export function useRequest <T> ( requestInfo: RequestInfo, requestInit?: RequestInit | null, fetchOnMount?: boolean ): useRequestReturn<T> {
+  const [ response, setResponse ] = useState<TResponse<T>>({
     data: null,
     isLoading: false,
     error: null
