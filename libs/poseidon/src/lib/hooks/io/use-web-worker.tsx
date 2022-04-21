@@ -19,7 +19,7 @@ export const useWebWorker = (
 ) => {
     const [ messages, setMessages ] = useState([]);
     
-    const translationWorker = useMemo(() => {
+    const newWorker = useMemo(() => {
         return window.Worker ? new WorkerBuilder(worker) : null;
     }, [])
 
@@ -36,14 +36,14 @@ export const useWebWorker = (
     }, []);
 
     useEffect(() => {
-        if (translationWorker) {
-            translationWorker.onmessage = (message) => onMesssage ? onMesssage(message) : builtInOnMessage(message);
-            translationWorker.onmessageerror = (message) => onMessageError ? onMessageError(message) : builtInOnMessageError(message);
-            translationWorker.onerror = (message) => onError ? onError(message) : builtInOnError(message);
+        if (newWorker) {
+            newWorker.onmessage = (message) => onMesssage ? onMesssage(message) : builtInOnMessage(message);
+            newWorker.onmessageerror = (message) => onMessageError ? onMessageError(message) : builtInOnMessageError(message);
+            newWorker.onerror = (message) => onError ? onError(message) : builtInOnError(message);
         }
     }, []);
 
-    return translationWorker;
+    return newWorker;
 }
 
 export default useWebWorker;
