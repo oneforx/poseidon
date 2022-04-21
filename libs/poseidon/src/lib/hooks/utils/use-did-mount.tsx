@@ -4,10 +4,9 @@ export function useDidMount(callback?: () => void): boolean {
   const [ didMount, setDidMount ] = useState(false);
 
   useEffect(() => {
-    if (callback) callback();
+    if (didMount != true && callback) callback();
     setDidMount(true)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [ didMount, callback ]);
 
   return didMount
 }
