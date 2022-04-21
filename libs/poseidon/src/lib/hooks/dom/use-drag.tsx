@@ -9,7 +9,7 @@ export function useDrag <T extends HTMLElement> ( ref: RefObject<T> ) {
 
   const handleMouseUp = useCallback((e) => {
     setIsDragging(true)
-  }, [])
+  }, []);
 
   useEffect(() => {
       const currentRef = ref.current;

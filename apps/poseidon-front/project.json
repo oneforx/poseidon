@@ -10,7 +10,7 @@
       "options": {
         "outputPath": "dist/apps/poseidon-front",
         "index": "apps/poseidon-front/src/index.html",
-        "baseHref": "/",
+        "baseHref": "/poseidon/",
         "main": "apps/poseidon-front/src/main.tsx",
         "polyfills": "apps/poseidon-front/src/polyfills.ts",
         "tsConfig": "apps/poseidon-front/tsconfig.app.json",

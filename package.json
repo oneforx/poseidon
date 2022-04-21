@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "build-front": "NX_BASE_HREF=/poseidon/ nx build --prod --baseHref=/poseidon/",
+    "build-front": "cross-env NX_BASE_HREF=/poseidon/ nx build poseidon-front --prod --baseHref=/poseidon/",
     "test": "nx test",
     "publish": "nx build poseidon && cd dist/libs/poseidon && npm publish --scope=@oneforx/poseidon --access=public",
     "deploy": "gh-pages -d dist/apps/poseidon-front",
@@ -15,6 +15,7 @@
   "dependencies": {
     "autoprefixer": "^10.4.0",
     "core-js": "^3.6.5",
+    "cross-env": "^7.0.3",
     "gh-pages": "^3.2.3",
     "postcss": "^8.4.0",
     "react": "17.0.2",
