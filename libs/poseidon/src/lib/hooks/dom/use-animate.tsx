@@ -3,8 +3,8 @@ import { useEffect, useState, RefObject } from 'react'
 // Génération des keyframes grace à la futur Web Animation IDE
 // https://github.com/bawdeveloppement/web-animator
 interface animationProps {
-  keyframes: Keyframe[],
-  timing: | KeyframeAnimationOptions | undefined
+  keyframes: Keyframe[] | PropertyIndexedKeyframes | null,
+  timing: number | KeyframeAnimationOptions | undefined
 }
 
 export const useAnimate = (ref: RefObject<HTMLElement>, { keyframes, timing }: animationProps) => {
